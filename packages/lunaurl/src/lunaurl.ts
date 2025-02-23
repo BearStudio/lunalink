@@ -1,3 +1,5 @@
+import queryString from "query-string";
+
 type ExtractParams<Path extends string> =
   Path extends `${string}:${infer Param}/${infer Rest}`
     ? { [K in Param]: string } & ExtractParams<`/${Rest}`>
@@ -7,15 +9,13 @@ type ExtractParams<Path extends string> =
 
 type ParamsDefaultType = Record<string, any>;
 
-type Result =
-  | { status: "OK"; data: unknown }
-  | { status: "Err"; error: unknown };
-
 export function lunaurl<Path extends string>(
   path: Path,
   params: ExtractParams<Path> & ParamsDefaultType
 ) {
-  return stringSubstitution(path, params);
+  const result = stringSubstitution(path, params);
+
+  return result;
 }
 
 const PARAM_REGEX = /:[_A-Za-z]+\w*/g;
@@ -23,12 +23,23 @@ function stringSubstitution(
   pathBeforeReplace: string,
   params: ParamsDefaultType
 ) {
+  const leftovers = new Map(Object.entries(params));
   const finalPath = pathBeforeReplace.replace(PARAM_REGEX, (pathItem) => {
     const pathItemName = pathItem.slice(1); // Remove the `:`
-    // TODO validate name value is provided
 
+    if (!leftovers.has(pathItemName)) {
+      throw new Error(`Missing parameter ${pathItemName}`);
+    }
+
+    leftovers.delete(pathItemName);
     return encodeURIComponent(params[pathItemName]);
   });
 
-  return finalPath;
+  // If no more params are available we return the string
+  if (leftovers.size === 0) {
+    return finalPath;
+  }
+
+  const queryParams = queryString.stringify(Object.fromEntries(leftovers));
+  return `${finalPath}?${queryParams}`;
 }

@@ -16,5 +16,8 @@
     "@repo/typescript-config": "workspace:*",
     "typescript": "latest",
     "vitest": "3.0.6"
+  },
+  "dependencies": {
+    "query-string": "9.1.1"
   }
 }
