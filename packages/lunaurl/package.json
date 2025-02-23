@@ -1,0 +1,20 @@
+{
+  "name": "@repo/lunaurl",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "test": "vitest"
+  },
+  "exports": {
+    "./lunaurl": {
+      "types": "./src/lunaurl.ts",
+      "default": "./dist/lunaurl.js"
+    }
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "latest",
+    "vitest": "3.0.6"
+  }
+}
