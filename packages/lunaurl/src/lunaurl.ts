@@ -1,13 +1,21 @@
 import queryString from "query-string";
 
-type ExtractParams<Path extends string> =
-  Path extends `${string}:${infer Param}/${infer Rest}`
-    ? { [K in Param]: string } & ExtractParams<`/${Rest}`>
-    : Path extends `${string}:${infer Param}`
-      ? { [K in Param]: string }
-      : {};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ExplicitAny = any;
 
-type ParamsDefaultType = Record<string, any>;
+type ExtractParams<Path extends string> =
+  Path extends `${string}:${infer Param}?/${infer Rest}`
+    ? { [K in Param]: string } & ExtractParams<`/${Rest}`>
+    : Path extends `${string}:${infer Param}?`
+      ? { [K in Param]: string }
+      : Path extends `${string}:${infer Param}/${infer Rest}`
+        ? { [K in Param]: string } & ExtractParams<`/${Rest}`>
+        : Path extends `${string}:${infer Param}`
+          ? { [K in Param]: string }
+          : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+            {};
+
+type ParamsDefaultType = Record<string, ExplicitAny>;
 
 export function lunaurl<Path extends string>(
   path: Path,
@@ -41,5 +49,18 @@ function stringSubstitution(
   }
 
   const queryParams = queryString.stringify(Object.fromEntries(leftovers));
-  return `${finalPath}?${queryParams}`;
+  return `${cleanPath(finalPath)}?${queryParams}`;
+}
+
+/**
+ *
+ * @param path The path to clean
+ * @returns The cleaned path
+ */
+function cleanPath(path: string) {
+  if (path.endsWith("?")) {
+    return path.slice(0, -1);
+  }
+
+  return path;
 }

@@ -60,4 +60,15 @@ describe("lunaurl", () => {
 
     expect(actual).toBe(expected);
   });
+
+  it("shoud remove ? if it is already in the path", () => {
+    const actual = lunaurl("/contacts/:id?", {
+      id: "9D8F189B-6453-477C-BEAE-8BAE00B5DD52",
+      search: "search",
+    });
+    const expected =
+      "/contacts/9D8F189B-6453-477C-BEAE-8BAE00B5DD52?search=search";
+
+    expect(actual).toBe(expected);
+  });
 });
