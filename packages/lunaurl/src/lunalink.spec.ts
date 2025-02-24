@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { lunaurl } from "./lunaurl.js";
+import { lunalink } from "./lunalink.js";
 
-describe("lunaurl", () => {
+describe("lunalink", () => {
   it("should replace a single param", () => {
-    const actual = lunaurl("/contacts/:id", {
+    const actual = lunalink("/contacts/:id", {
       id: "851C1EC5-47F1-4CB6-A849-19CB007D786C",
     });
     const expected = "/contacts/851C1EC5-47F1-4CB6-A849-19CB007D786C";
@@ -12,7 +12,7 @@ describe("lunaurl", () => {
   });
 
   it("should replace multiple params", () => {
-    const actual = lunaurl("/contacts/:contactId/emails/:emailId", {
+    const actual = lunalink("/contacts/:contactId/emails/:emailId", {
       contactId: "22DF14FF-387F-4E48-92F0-DC60738E13F0",
       emailId: "EE055AF1-0D08-406B-9B93-E3869CA6227E",
     });
@@ -24,7 +24,7 @@ describe("lunaurl", () => {
 
   it("should throw an error on missing parameter", () => {
     const actual = () =>
-      lunaurl(
+      lunalink(
         "/contacts/:contactId/emails/:emailId",
         // @ts-expect-error we miss one parameter to make sure we handle runtime throw
         {
@@ -37,7 +37,7 @@ describe("lunaurl", () => {
   });
 
   it("should work with simple replace and with one more param", () => {
-    const actual = lunaurl("/contacts/:id", {
+    const actual = lunalink("/contacts/:id", {
       id: "9D8F189B-6453-477C-BEAE-8BAE00B5DD52",
       search: "search",
     });
@@ -48,7 +48,7 @@ describe("lunaurl", () => {
   });
 
   it("should replace multiple params and multiple query params", () => {
-    const actual = lunaurl("/contacts/:id/emails/:emailId", {
+    const actual = lunalink("/contacts/:id/emails/:emailId", {
       id: "9D8F189B-6453-477C-BEAE-8BAE00B5DD52",
       emailId: "5998CFB1-9482-4A44-BE59-8B2DFC91A224",
       search: "Black cat named Luna",
@@ -62,12 +62,53 @@ describe("lunaurl", () => {
   });
 
   it("shoud remove ? if it is already in the path", () => {
-    const actual = lunaurl("/contacts/:id?", {
+    const actual = lunalink("/contacts/:id?", {
       id: "9D8F189B-6453-477C-BEAE-8BAE00B5DD52",
       search: "search",
     });
     const expected =
       "/contacts/9D8F189B-6453-477C-BEAE-8BAE00B5DD52?search=search";
+
+    expect(actual).toBe(expected);
+  });
+});
+
+describe("lunalink with base url", () => {
+  it("should preprend base url to simple replace", () => {
+    const actual = lunalink(
+      "/contacts/:id",
+      { id: "584651DC-47A5-4A12-B44E-69B98C208CFE" },
+      { baseURL: "https://api.example.com" }
+    );
+
+    const expected =
+      "https://api.example.com/contacts/584651DC-47A5-4A12-B44E-69B98C208CFE";
+
+    expect(actual).toBe(expected);
+  });
+
+  it("should preprend base url with trailing slash to simple replace", () => {
+    const actual = lunalink(
+      "/contacts/:id",
+      { id: "584651DC-47A5-4A12-B44E-69B98C208CFE" },
+      { baseURL: "https://api.example.com/" }
+    );
+
+    const expected =
+      "https://api.example.com/contacts/584651DC-47A5-4A12-B44E-69B98C208CFE";
+
+    expect(actual).toBe(expected);
+  });
+
+  it("should preprend base url to simple replace with no leading slash", () => {
+    const actual = lunalink(
+      "contacts/:id",
+      { id: "584651DC-47A5-4A12-B44E-69B98C208CFE" },
+      { baseURL: "https://api.example.com" }
+    );
+
+    const expected =
+      "https://api.example.com/contacts/584651DC-47A5-4A12-B44E-69B98C208CFE";
 
     expect(actual).toBe(expected);
   });

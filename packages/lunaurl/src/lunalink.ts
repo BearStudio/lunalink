@@ -17,13 +17,18 @@ type ExtractParams<Path extends string> =
 
 type ParamsDefaultType = Record<string, ExplicitAny>;
 
-export function lunaurl<Path extends string>(
+export function lunalink<Path extends string>(
   path: Path,
-  params: ExtractParams<Path> & ParamsDefaultType
+  params: ExtractParams<Path> & ParamsDefaultType,
+  config?: { baseURL?: string | URL }
 ) {
   const result = stringSubstitution(path, params);
 
-  return result;
+  if (!config?.baseURL) {
+    return result;
+  }
+
+  return join(config.baseURL.toString(), result, "/");
 }
 
 const PARAM_REGEX = /:[_A-Za-z]+\w*/g;
@@ -63,4 +68,24 @@ function cleanPath(path: string) {
   }
 
   return path;
+}
+
+/**
+ * @param path1 first path to join (can be the start or the end)
+ * @param path2 second path to join (can be the start or the end)
+ * @param separator The separaotor to use (default to `/`)
+ * @returns The joined paths using the provided separator
+ */
+export function join(path1: string, path2: string, separator: string = "/") {
+  // Ensure path1 is the base URL if either argument is a full URL
+  if (/^https?:\/\//.test(path2) && !/^https?:\/\//.test(path1)) {
+    [path1, path2] = [path2, path1];
+  }
+
+  // Remove trailing separator from path1
+  path1 = path1.replace(new RegExp(`${separator}+$`), "");
+  // Remove leading separator from path2
+  path2 = path2.replace(new RegExp(`^${separator}+`), "");
+
+  return `${path1}${separator}${path2}`;
 }
