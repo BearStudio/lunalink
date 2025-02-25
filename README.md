@@ -2,7 +2,13 @@
 
 ![luna the cat with the title lunalink on her head](./apps/web/public/lunalink.jpeg)
 
-This library is an alternative to `urlcat` which isn't maintained anymore
+This library is an alternative to `urlcat` which isn't maintained anymore.
+That is why it is named after my cat, Luna 🐈‍⬛. Link is because it is easy to say
+after `luna`. That's it, that's the whole story.
+
+I (@yoannfleurydev), did not want to fork `urlcat` to challenge myself into
+reimplementing it. Some API design are made to simplify my development, I hope
+it will simplify yours too.
 
 ## What's inside?
 
