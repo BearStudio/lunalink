@@ -18,43 +18,6 @@ importers:
         specifier: 5.7.3
         version: 5.7.3
 
-  apps/docs:
-    dependencies:
-      '@repo/lunalink':
-        specifier: workspace:*
-        version: link:../../packages/lunaurl
-      next:
-        specifier: ^15.1.6
-        version: 15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      react:
-        specifier: ^19.0.0
-        version: 19.0.0
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.0.0(react@19.0.0)
-    devDependencies:
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../../packages/eslint-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../../packages/typescript-config
-      '@types/node':
-        specifier: ^22
-        version: 22.13.0
-      '@types/react':
-        specifier: 19.0.8
-        version: 19.0.8
-      '@types/react-dom':
-        specifier: 19.0.3
-        version: 19.0.3(@types/react@19.0.8)
-      eslint:
-        specifier: ^9.20.0
-        version: 9.20.0
-      typescript:
-        specifier: 5.7.3
-        version: 5.7.3
-
   apps/web:
     dependencies:
       '@repo/lunalink':
