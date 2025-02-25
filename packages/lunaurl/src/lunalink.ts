@@ -3,18 +3,21 @@ import queryString from "query-string";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ExplicitAny = any;
 
+/** Type to extract params from a path */
 type ExtractParams<Path extends string> =
-  Path extends `${string}:${infer Param}?/${infer Rest}`
-    ? { [K in Param]: string } & ExtractParams<`/${Rest}`>
-    : Path extends `${string}:${infer Param}?`
-      ? { [K in Param]: string }
-      : Path extends `${string}:${infer Param}/${infer Rest}`
-        ? { [K in Param]: string } & ExtractParams<`/${Rest}`>
-        : Path extends `${string}:${infer Param}`
-          ? { [K in Param]: string }
-          : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-            {};
+  // Handle path handing with `?`
+  Path extends `${string}:${infer Param}?`
+    ? { [K in Param]: string }
+    : // Handle path splitting
+      Path extends `${string}:${infer Param}/${infer Rest}`
+      ? { [K in Param]: string } & ExtractParams<`/${Rest}`>
+      : // Handle params
+        Path extends `${string}:${infer Param}`
+        ? { [K in Param]: string }
+        : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+          {};
 
+/** Type to add more params */
 type ParamsDefaultType = Record<string, ExplicitAny>;
 
 export function lunalink<Path extends string>(

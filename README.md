@@ -1,5 +1,7 @@
 # lunalink
 
+![luna the cat with the title lunalink on her head](./apps/web/public/lunalink.jpeg)
+
 This library is an alternative to `urlcat` which isn't maintained anymore
 
 ## What's inside?
