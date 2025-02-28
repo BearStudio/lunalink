@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { lunalink } from "./lunalink.js";
+import { lunalink } from "./index.js";
 
 describe("lunalink", () => {
   it("should replace a single param", () => {

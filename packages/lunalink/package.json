@@ -2,18 +2,22 @@
   "name": "@repo/lunalink",
   "type": "module",
   "scripts": {
-    "dev": "tsc --watch",
-    "build": "tsc",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "build": "tsup src/index.ts --format esm,cjs --dts --minify",
     "test": "vitest"
   },
   "exports": {
-    "./lunalink": {
-      "types": "./src/lunalink.ts",
-      "default": "./dist/lunalink.js"
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
     }
   },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
+    "tsup": "8.4.0",
     "type-testing": "0.2.0",
     "typescript": "latest",
     "vitest": "3.0.6"

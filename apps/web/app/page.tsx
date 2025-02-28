@@ -1,4 +1,4 @@
-import { lunalink } from "@repo/lunalink/lunalink";
+import { lunalink } from "@repo/lunalink";
 
 export default function Home() {
   return (

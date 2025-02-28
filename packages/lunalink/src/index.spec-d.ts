@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Equal, Expect } from "type-testing";
-import { ExtractParams } from "./lunalink.js";
+import { ExtractParams } from "./index.js";
 
 const simpleParam = "/contacts/:id";
 const multipleParams = "/contacts/:contactId/address/:addressId";
