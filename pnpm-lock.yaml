@@ -22,7 +22,7 @@ importers:
     dependencies:
       '@repo/lunalink':
         specifier: workspace:*
-        version: link:../../packages/lunaurl
+        version: link:../../packages/lunalink
       next:
         specifier: 15.1.7
         version: 15.1.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -91,7 +91,7 @@ importers:
         specifier: ^8.24.0
         version: 8.24.0(eslint@9.20.0)(typescript@5.7.3)
 
-  packages/lunaurl:
+  packages/lunalink:
     dependencies:
       query-string:
         specifier: 9.1.1
@@ -100,6 +100,9 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      type-testing:
+        specifier: 0.2.0
+        version: 0.2.0
       typescript:
         specifier: latest
         version: 5.7.3
@@ -1693,6 +1696,10 @@ packages:
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
+
+  type-testing@0.2.0:
+    resolution: {integrity: sha512-HAf4o9LjUAh9xEIXZTNm+ak2tjTgK64QhTlT/D8UNedII2/eagdEbtbaVK6920K7+QBrwfvxpjPGlfWVKZ+MZQ==}
+    engines: {node: '>= 20.x'}
 
   typed-array-buffer@1.0.3:
     resolution: {integrity: sha512-nAYYwfY3qnzX30IkA6AQZjVbtK6duGontcQm1WSG1MD94YLqK0515GNApXkoxKOWMusVssAHWLh9SeaoefYFGw==}
@@ -3530,6 +3537,8 @@ snapshots:
   type-check@0.4.0:
     dependencies:
       prelude-ls: 1.2.1
+
+  type-testing@0.2.0: {}
 
   typed-array-buffer@1.0.3:
     dependencies:
