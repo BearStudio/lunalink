@@ -1,5 +1,5 @@
 {
-  "name": "@bearstudio/lunalink",
+  "name": "lunalink",
   "private": true,
   "scripts": {
     "build": "turbo run build",
