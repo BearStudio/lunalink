@@ -1,5 +1,11 @@
 # @bearstudio/lunalink
 
+## 0.1.2
+
+### Patch Changes
+
+- c781861: add metadata to package
+
 ## 0.1.1
 
 ### Patch Changes
