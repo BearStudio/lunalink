@@ -1,6 +1,18 @@
 {
   "name": "@bearstudio/lunalink",
   "version": "0.1.1",
+  "license": "MIT",
+  "description": "Lightweight TypeScript library to efficiently maintain and build URLs",
+  "keywords": [
+    "typescript",
+    "url",
+    "builder",
+    "luna",
+    "link",
+    "parameters",
+    "ts",
+    "dynamic"
+  ],
   "type": "module",
   "scripts": {
     "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
@@ -29,5 +41,18 @@
   },
   "dependencies": {
     "query-string": "9.1.1"
+  },
+  "author": {
+    "email": "yoann@bearstudio.fr",
+    "name": "Yoann Fleury",
+    "url": "https://www.yoannfleury.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BearStudio/lunalink.git",
+    "directory": "packages/lunalink"
+  },
+  "bugs": {
+    "url": "https://github.com/BearStudio/lunalink/issues"
   }
 }

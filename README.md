@@ -2,13 +2,13 @@
 
 ![luna the cat with the title lunalink on her head](./apps/web/public/lunalink.jpeg)
 
-This library is an alternative to `urlcat` which isn't maintained anymore.
-That is why it is named after my cat, Luna 🐈‍⬛. Link is because it is easy to say
-after `luna`. That's it, that's the whole story.
+This library is an alternative to [`urlcat`](https://github.com/balazsbotond/urlcat)
+which isn't maintained anymore. That is why it is named after my cat, Luna 🐈‍⬛.
+Link is because it is easy to say after `luna`. That's it, that's the whole story.
 
-I (@yoannfleurydev), did not want to fork `urlcat` to challenge myself into
-reimplementing it. Some API design are made to simplify my development, I hope
-it will simplify yours too.
+I ([@yoannfleurydev](https://github.com/yoannfleurydev)), did not want to fork
+`urlcat` to challenge myself into reimplementing it. Some API design are made to
+simplify my development, I hope it will simplify yours too.
 
 ## What's inside?
 
@@ -17,7 +17,7 @@ This monorepo includes the following packages/apps:
 ### Apps and Packages
 
 - `web`: a [Next.js](https://nextjs.org/) app
-- `@repo/lunalink`: the source code of the library
+- `@repo/lunalink`: the source code of the library. Learn mode about it in its dedicated [README](./packages/lunalink/README.md)
 - `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
