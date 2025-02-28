@@ -1,5 +1,6 @@
 {
   "name": "@repo/lunalink",
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
