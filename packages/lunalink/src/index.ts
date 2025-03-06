@@ -39,20 +39,22 @@ function stringSubstitution(
   pathBeforeReplace: string,
   params: ParamsDefaultType
 ) {
-  const leftovers = new Map(Object.entries(params));
+  const paramsMap = new Map(Object.entries(params));
+  const used = new Set();
   const finalPath = pathBeforeReplace.replace(PARAM_REGEX, (pathItem) => {
     const pathItemName = pathItem.slice(1); // Remove the `:`
 
-    if (!leftovers.has(pathItemName)) {
+    if (!paramsMap.has(pathItemName)) {
       throw new Error(`Missing parameter ${pathItemName}`);
     }
 
-    leftovers.delete(pathItemName);
+    used.add(pathItemName);
     return encodeURIComponent(params[pathItemName]);
   });
 
+  const leftovers = [...paramsMap].filter(([key]) => !used.has(key));
   // If no more params are available we return the string
-  if (leftovers.size === 0) {
+  if (leftovers.length === 0) {
     return finalPath;
   }
 

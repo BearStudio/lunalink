@@ -22,6 +22,17 @@ describe("lunalink", () => {
     expect(actual).toBe(expected);
   });
 
+  it("should replace multiple times the same param", () => {
+    // This is an example, don't do that in the real world for an API
+    const actual = lunalink("/contacts/:contactId/:contactId/:contactId", {
+      contactId: "22DF14FF-387F-4E48-92F0-DC60738E13F0",
+    });
+    const expected =
+      "/contacts/22DF14FF-387F-4E48-92F0-DC60738E13F0/22DF14FF-387F-4E48-92F0-DC60738E13F0/22DF14FF-387F-4E48-92F0-DC60738E13F0";
+
+    expect(actual).toBe(expected);
+  });
+
   it("should throw an error on missing parameter", () => {
     const actual = () =>
       lunalink(
