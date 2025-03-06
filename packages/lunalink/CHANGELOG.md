@@ -1,5 +1,15 @@
 # @bearstudio/lunalink
 
+## 0.2.0
+
+### Minor Changes
+
+- 64c256e: it is now possible to used params multiple times
+
+### Patch Changes
+
+- 36ff576: add test code coverage
+
 ## 0.1.2
 
 ### Patch Changes
