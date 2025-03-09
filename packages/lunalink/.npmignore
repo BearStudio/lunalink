@@ -1,2 +1,5 @@
 src/
 .turbo
+coverage/
+eslint.*
+tsconfig.*
