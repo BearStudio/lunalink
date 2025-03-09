@@ -1,5 +1,11 @@
 # @bearstudio/lunalink
 
+## 0.2.1
+
+### Patch Changes
+
+- fda2ea2: Types now handle dot separator
+
 ## 0.2.0
 
 ### Minor Changes
