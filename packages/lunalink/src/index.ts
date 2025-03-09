@@ -5,17 +5,20 @@ type ExplicitAny = any;
 
 /** Type to extract params from a path */
 export type ExtractParams<Path extends string> =
-  // Handle path handing with `?`
+  // Handle path params with `?`
   Path extends `${string}:${infer Param}?`
     ? { [K in Param]: string }
-    : // Handle path splitting
-      Path extends `${string}:${infer Param}/${infer Rest}`
-      ? { [K in Param]: string } & ExtractParams<`/${Rest}`>
-      : // Handle params
-        Path extends `${string}:${infer Param}`
-        ? { [K in Param]: string }
-        : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-          {};
+    : // Handle params with dot separator
+      Path extends `${string}:${infer Param}.${infer Rest}`
+      ? { [K in Param]: string } & ExtractParams<`${Rest}`>
+      : // Handle path splitting
+        Path extends `${string}:${infer Param}/${infer Rest}`
+        ? { [K in Param]: string } & ExtractParams<`/${Rest}`>
+        : // Handle params
+          Path extends `${string}:${infer Param}`
+          ? { [K in Param]: string }
+          : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+            {};
 
 /** Type to add more params */
 type ParamsDefaultType = Record<string, ExplicitAny>;
