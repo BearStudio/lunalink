@@ -123,4 +123,15 @@ describe("lunalink with base url", () => {
 
     expect(actual).toBe(expected);
   });
+
+  it("should replace params when dot separator", () => {
+    const actual = lunalink("contacts/:id.:extension", {
+      id: "584651DC-47A5-4A12-B44E-69B98C208CFE",
+      extension: "ext",
+    });
+
+    const expected = "contacts/584651DC-47A5-4A12-B44E-69B98C208CFE.ext";
+
+    expect(actual).toBe(expected);
+  });
 });
