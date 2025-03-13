@@ -17,6 +17,7 @@
   "scripts": {
     "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
     "build": "tsup src/index.ts --format esm,cjs --dts --minify",
+    "lint": "eslint src/",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
@@ -35,11 +36,11 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "@vitest/coverage-v8": "3.0.6",
+    "@vitest/coverage-v8": "3.0.8",
     "tsup": "8.4.0",
     "type-testing": "0.2.0",
     "typescript": "latest",
-    "vitest": "3.0.6"
+    "vitest": "3.0.8"
   },
   "dependencies": {
     "query-string": "9.1.1"
