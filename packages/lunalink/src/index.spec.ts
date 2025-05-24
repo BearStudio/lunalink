@@ -135,3 +135,18 @@ describe("lunalink with base url", () => {
     expect(actual).toBe(expected);
   });
 });
+
+describe("lunalink with encodeURIComponent function", () => {
+  it("should not escape URI component with the provided function", () => {
+    const actual = lunalink(
+      "/podcasts/:id",
+      {
+        id: "fork-it-community-tech-podcast-fr/episodes/1",
+      },
+      { encodeURIComponent: (v) => String(v) }
+    );
+    const expected = "/podcasts/fork-it-community-tech-podcast-fr/episodes/1";
+
+    expect(actual).toBe(expected);
+  });
+});

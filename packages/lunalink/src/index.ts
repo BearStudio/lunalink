@@ -23,12 +23,24 @@ export type ExtractParams<Path extends string> =
 /** Type to add more params */
 type ParamsDefaultType = Record<string, ExplicitAny>;
 
+type Config = {
+  baseURL?: string | URL;
+  /**
+   * Escape the parameters so the query parameters are safely injected.
+   * @default encodeURIComponent
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
+   * @param value The value to encode
+   * @returns the stringified and escaped value
+   */
+  encodeURIComponent?: (value: string | number | boolean) => string;
+};
+
 export function lunalink<Path extends string>(
   path: Path,
   params: ExtractParams<Path> & ParamsDefaultType,
-  config?: { baseURL?: string | URL }
+  config?: Config
 ) {
-  const result = stringSubstitution(path, params);
+  const result = stringSubstitution(path, params, config);
 
   if (!config?.baseURL) {
     return result;
@@ -40,10 +52,12 @@ export function lunalink<Path extends string>(
 const PARAM_REGEX = /:[_A-Za-z]+\w*/g;
 function stringSubstitution(
   pathBeforeReplace: string,
-  params: ParamsDefaultType
+  params: ParamsDefaultType,
+  config?: Pick<Config, "encodeURIComponent">
 ) {
   const paramsMap = new Map(Object.entries(params));
   const used = new Set();
+  const encodeFn = config?.encodeURIComponent ?? encodeURIComponent;
   const finalPath = pathBeforeReplace.replace(PARAM_REGEX, (pathItem) => {
     const pathItemName = pathItem.slice(1); // Remove the `:`
 
@@ -52,7 +66,7 @@ function stringSubstitution(
     }
 
     used.add(pathItemName);
-    return encodeURIComponent(params[pathItemName]);
+    return encodeFn(params[pathItemName]);
   });
 
   const leftovers = [...paramsMap].filter(([key]) => !used.has(key));
