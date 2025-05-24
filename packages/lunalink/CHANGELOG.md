@@ -1,5 +1,11 @@
 # @bearstudio/lunalink
 
+## 0.3.0
+
+### Minor Changes
+
+- 314c68c: add a new config key so user can override the encodeURIComponent that is applied to params
+
 ## 0.2.1
 
 ### Patch Changes
