@@ -4,20 +4,22 @@ import queryString from "query-string";
 type ExplicitAny = any;
 
 /** Type to extract params from a path */
+/** Type to extract params from a path */
 export type ExtractParams<Path extends string> =
-  // Handle path params with `?`
+  // 1) Handle path params with `?`
   Path extends `${string}:${infer Param}?`
     ? { [K in Param]: string }
-    : // Handle params with dot separator
-      Path extends `${string}:${infer Param}.${infer Rest}`
-      ? { [K in Param]: string } & ExtractParams<`${Rest}`>
-      : // Handle path splitting
-        Path extends `${string}:${infer Param}/${infer Rest}`
-        ? { [K in Param]: string } & ExtractParams<`/${Rest}`>
-        : // Handle params
+    : // 2) Handle path splitting
+      Path extends `${string}:${infer Param}/${infer Rest}`
+      ? { [K in Param]: string } & ExtractParams<`/${Rest}`>
+      : // 3) Handle params with dot separator
+        Path extends `${string}:${infer Param}.${infer Rest}`
+        ? { [K in Param]: string } & ExtractParams<`${Rest}`>
+        : // 4) Handle params
           Path extends `${string}:${infer Param}`
           ? { [K in Param]: string }
-          : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+          : // Nothing to extract
+            // eslint-disable-next-line @typescript-eslint/no-empty-object-type
             {};
 
 /** Type to add more params */

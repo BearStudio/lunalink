@@ -82,6 +82,18 @@ describe("lunalink", () => {
 
     expect(actual).toBe(expected);
   });
+
+  it("should handle params that are followed by a dot (.)", () => {
+    const actual = lunalink("/podcasts/:id/episodes/:episodes.html.md", {
+      id: "fork-it-community-tech-podcast-fr",
+      episodes: "1",
+    });
+
+    const expected =
+      "/podcasts/fork-it-community-tech-podcast-fr/episodes/1.html.md";
+
+    expect(actual).toBe(expected);
+  });
 });
 
 describe("lunalink with base url", () => {
