@@ -1,6 +1,6 @@
 {
   "name": "@bearstudio/lunalink",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   "description": "Lightweight TypeScript library to efficiently maintain and build URLs",
   "keywords": [
