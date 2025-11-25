@@ -97,7 +97,7 @@ function cleanPath(path: string) {
 /**
  * @param path1 first path to join (can be the start or the end)
  * @param path2 second path to join (can be the start or the end)
- * @param separator The separaotor to use (default to `/`)
+ * @param separator The separator to use (default to `/`)
  * @returns The joined paths using the provided separator
  */
 export function join(path1: string, path2: string, separator: string = "/") {

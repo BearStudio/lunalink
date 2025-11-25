@@ -10,6 +10,8 @@ I ([@yoannfleurydev](https://github.com/yoannfleurydev)), did not want to fork
 `urlcat` to challenge myself into reimplementing it. Some API design are made to
 simplify my development, I hope it will simplify yours too.
 
+The library main purpose is to provide utilities to, given a url, extract parameters and replace them with real values. No more `Record<string, string>` for your url params!
+
 ## Features
 
 - 🤏 Tiny (**2.8 kB** minified + gzipped)
@@ -31,6 +33,9 @@ pnpm add @bearstudio/lunalink
 Go from this kind of code:
 
 ```ts
+import { useQuery } from '@tanstack/react-query';
+import { pick } from 'remeda';
+
 type EventCategoryType = {
   year: number;
   typeId: string;
@@ -41,14 +46,12 @@ type EventCategoryType = {
 }
 
 const useEventCategory = (params: EventCategoryType) => {
-  const api = useApi();
-
   return useQuery({
     queryKey: ['event', 'type', 'category', params],
     queryFn: async () => {
       const searchParams = new URLSearchParams(pick(params, ['filter', 'page', 'size']));
 
-      const response = await api.get(`demo/event/${params.year}/type/${params.typeId}/category/${params.categoryId}?${searchParams.toString()}`);
+      const response = await fetch(`demo/event/${params.year}/type/${params.typeId}/category/${params.categoryId}?${searchParams.toString()}`);
 
       return response.json();
     }
@@ -61,30 +64,44 @@ const useEventCategory = (params: EventCategoryType) => {
 to this kind of code:
 
 ```ts
-import { lunalink, ExtractParams } from "@bearstudio/lunalink";
+import { useQuery } from '@tanstack/react-query';
+import { type ExtractParams, lunalink } from '@bearstudio/lunalink';
+import { pick } from 'remeda';
 
-const EventCategoryIdRoute = 'demo/event/:year/type/:typeId/category/:categoryId'
-type EventCategoryIdRouteType = ExtractParams<typeof EventTypeCategoryId> & {
+const eventCategoryIdRoute = 'demo/event/:year/type/:typeId/category/:categoryId';
+type EventCategoryIdRouteType = ExtractParams<typeof eventCategoryIdRoute> & {
   filter?: string;
   page?: string;
   size?: string;
-}
+};
 
-const useEventCategory = (params:) => {
-  const api = useApi();
+const useEventCategory = (params: EventCategoryIdRouteType) => {
+  const searchParams = new URLSearchParams(pick(params, ['filter', 'page', 'size']));
 
   return useQuery({
     queryKey: ['event', 'type', 'category', params],
     queryFn: async () => {
-      const response = await api.get(lunalink(EventTypeCategoryId, params));
-
+      const response = await fetch(lunalink(eventCategoryIdRoute, params));
       return response.json();
-    }
-  })
-}
+    },
+  });
+};
 ```
 
 so you don't have to maintain your type yourself, and enjoy readability.
+
+```ts
+const apiUrl = 'a/path/with/:variables?queryParam=1'
+
+// Is like
+// type PathParamsType = {
+//   variable: string;
+// }
+type PathParamsType = ExtractParams<typeof apiUrl>
+
+// fullUrl === 'https://example.org/a/path/with/a-variable?queryParam=1'
+const fullUrl = lunalink(apiUrl, { variables: "a-variable" }, { baseURL: "https://example.org" })
+```
 
 ## API
 
