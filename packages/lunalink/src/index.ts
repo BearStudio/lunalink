@@ -4,7 +4,6 @@ import queryString from "query-string";
 type ExplicitAny = any;
 
 /** Type to extract params from a path */
-/** Type to extract params from a path */
 export type ExtractParams<Path extends string> =
   // 1) Handle path params with `?`
   Path extends `${string}:${infer Param}?`
