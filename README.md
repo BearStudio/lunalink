@@ -10,12 +10,12 @@ I ([@yoannfleurydev](https://github.com/yoannfleurydev)), did not want to fork
 `urlcat` to challenge myself into reimplementing it. Some API design are made to
 simplify my development, I hope it will simplify yours too.
 
-The library main purpose is to provide utilities to, given a url, extract parameters and replace them with real values. No more `Record<string, string>` for your url params!
+Lunalink main purpose is to provide utilities to, given a url, extract parameters and replace them with real values. No more `Record<string, string>` for your url params!
 
 ## Features
 
 - 🔬 URL Path params type extraction
-- 🔁 Replace path params placeholder with real values
+- 🔁 Replace path params placeholders with real values
 - 🤏 Tiny (**2.8 kB** minified + gzipped)
 - 🟦 TypeScript first
 - 🧪 Fully tested
@@ -32,7 +32,8 @@ pnpm add @bearstudio/lunalink
 
 ## Usage
 
-> 💡 These samples of code were purely invented for the example.
+> [!NOTE]  
+> These samples of code were purely invented for the example.
 
 Go from this kind of code:
 
@@ -76,7 +77,7 @@ import { type ExtractParams, lunalink } from '@bearstudio/lunalink';
 const eventCategoryIdRoute = 'demo/event/:year/type/:typeId/category/:categoryId';
 
 // 👍 Let lunalink detect path params given your url, and add your custom searchParams
-// The type will always be up to date with the path params declared in your url
+// The type will always be up to date with path params declared in your url
 type EventCategoryIdRouteType = ExtractParams<typeof eventCategoryIdRoute> & {
   filter?: string;
   page?: string;
@@ -114,7 +115,7 @@ No more types to maintain, only urls to declare! Easier to read, easier to use �
 ### `lunalink(pathToReplace, pathParams [, options]);`
 
 ```ts
-import { lunalink, ExtractParams, join } from '@bearstudio/lunalink';
+import { lunalink } from '@bearstudio/lunalink';
 
 // lunalink(path, variables, config);
 
