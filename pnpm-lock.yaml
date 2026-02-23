@@ -26,6 +26,12 @@ importers:
       '@bearstudio/lunalink':
         specifier: workspace:*
         version: link:../../packages/lunalink
+      '@fontsource-variable/inter':
+        specifier: 5.2.8
+        version: 5.2.8
+      '@fontsource-variable/jetbrains-mono':
+        specifier: 5.2.8
+        version: 5.2.8
       next:
         specifier: 15.4.9
         version: 15.4.9(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -547,6 +553,12 @@ packages:
   '@eslint/plugin-kit@0.2.7':
     resolution: {integrity: sha512-JubJ5B2pJ4k4yGxaNLdbjrnk9d/iDz6/q8wOilpIowd6PJPgaxCuHBnBszq7Ce2TyMrywm5r4PnKm6V3iiZF+g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@fontsource-variable/inter@5.2.8':
+    resolution: {integrity: sha512-kOfP2D+ykbcX/P3IFnokOhVRNoTozo5/JxhAIVYLpea/UBmCQ/YWPBfWIDuBImXX/15KH+eKh4xpEUyS2sQQGQ==}
+
+  '@fontsource-variable/jetbrains-mono@5.2.8':
+    resolution: {integrity: sha512-WBA9elru6Jdp5df2mES55wuOO0WIrn3kpXnI4+W2ek5u3ZgLS9XS4gmIlcQhiZOWEKl95meYdvK7xI+ETLCq/Q==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2986,6 +2998,10 @@ snapshots:
     dependencies:
       '@eslint/core': 0.12.0
       levn: 0.4.1
+
+  '@fontsource-variable/inter@5.2.8': {}
+
+  '@fontsource-variable/jetbrains-mono@5.2.8': {}
 
   '@humanfs/core@0.19.1': {}
 
