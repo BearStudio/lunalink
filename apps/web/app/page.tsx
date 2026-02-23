@@ -140,14 +140,10 @@ export default function Home() {
                 </span>
                 , {"{\n"}
                 {"  "}id:{" "}
-                <span className={styles.codeString}>
-                  &quot;4F82CDA2&quot;
-                </span>
-                ,{"\n"}
+                <span className={styles.codeString}>&quot;4F82CDA2&quot;</span>,
+                {"\n"}
                 {"  "}search:{" "}
-                <span className={styles.codeString}>
-                  &quot;FirstName&quot;
-                </span>
+                <span className={styles.codeString}>&quot;FirstName&quot;</span>
                 ,{"\n"}
                 {"  "}page:{" "}
                 <span className={styles.codeString}>&quot;1&quot;</span>,{"\n"}
@@ -205,8 +201,8 @@ export default function Home() {
             <div className={styles.featureIcon}>{"{T}"}</div>
             <h3 className={styles.featureTitle}>Type-safe parameters</h3>
             <p className={styles.featureDescription}>
-              Path parameters are extracted from your template string at the type
-              level. Miss a param and TypeScript will tell you.
+              Path parameters are extracted from your template string at the
+              type level. Miss a param and TypeScript will tell you.
             </p>
           </div>
 
@@ -259,32 +255,45 @@ export default function Home() {
 
       {/* Footer */}
       <footer className={styles.footer}>
-        <span className={styles.footerLogo}>lunalink</span>
-        <div className={styles.footerLinks}>
-          <a
-            href="https://github.com/BearStudio/lunalink"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.footerLink}
-          >
-            GitHub
-          </a>
-          <a
-            href="https://www.npmjs.com/package/@bearstudio/lunalink"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.footerLink}
-          >
-            npm
-          </a>
-          <a
-            href="https://github.com/BearStudio/lunalink/issues"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.footerLink}
-          >
-            Issues
-          </a>
+        <div className={styles.footerTop}>
+          <span className={styles.footerLogo}>lunalink</span>
+          <div className={styles.footerBottom}>
+            Made by{" "}
+            <a
+              href="https://www.bearstudio.fr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.footerBearLink}
+            >
+              BearStudio
+            </a>
+          </div>
+          <div className={styles.footerLinks}>
+            <a
+              href="https://github.com/BearStudio/lunalink"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.footerLink}
+            >
+              GitHub
+            </a>
+            <a
+              href="https://www.npmjs.com/package/@bearstudio/lunalink"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.footerLink}
+            >
+              npm
+            </a>
+            <a
+              href="https://github.com/BearStudio/lunalink/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.footerLink}
+            >
+              Issues
+            </a>
+          </div>
         </div>
       </footer>
     </div>

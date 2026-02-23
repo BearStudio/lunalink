@@ -49,7 +49,9 @@
   padding: 0.5rem 1rem;
   border: 1px solid var(--border);
   border-radius: 6px;
-  transition: border-color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
 }
 
 .githubLink:hover {
@@ -136,7 +138,9 @@
   font-size: 0.9375rem;
   border-radius: 8px;
   color: var(--muted);
-  transition: border-color 0.2s, color 0.2s;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
 }
 
 .secondaryButton:hover {
@@ -328,6 +332,12 @@
   border-top: 1px solid var(--border);
   padding: 2rem;
   display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.footerTop {
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }
@@ -354,6 +364,22 @@
   color: var(--fg);
 }
 
+.footerBottom {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.footerBearLink {
+  font-weight: 600;
+  color: var(--fg);
+  transition: opacity 0.2s;
+}
+
+.footerBearLink:hover {
+  opacity: 0.7;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .hero {
@@ -372,7 +398,7 @@
     display: none;
   }
 
-  .footer {
+  .footerTop {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
