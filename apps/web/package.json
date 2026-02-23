@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@bearstudio/lunalink": "workspace:*",
+    "@fontsource-variable/inter": "5.2.8",
+    "@fontsource-variable/jetbrains-mono": "5.2.8",
     "next": "15.4.9",
     "react": "19.1.0",
     "react-dom": "19.1.0"
