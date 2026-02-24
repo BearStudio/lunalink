@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bearstudio.github.io/lunalink/sitemap.xml
