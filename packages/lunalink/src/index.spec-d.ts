@@ -9,24 +9,34 @@ const multipleParamsWithDot = "/contacts/:contactId/address/:addressId.html.md";
 
 // Tests OK
 type TestSimpleParamOK = Expect<
-  Equal<ExtractParams<typeof simpleParam>, { id: string }>
+  Equal<
+    ExtractParams<typeof simpleParam>,
+    { id: string | number | boolean }
+  >
 >;
 
 type TestMultipleParamsOK = Expect<
   Equal<
     ExtractParams<typeof multipleParams>,
-    { contactId: string } & { addressId: string }
+    { contactId: string | number | boolean } & {
+      addressId: string | number | boolean;
+    }
   >
 >;
 
 type TestWithDotOK = Expect<
-  Equal<ExtractParams<typeof simpleParamWithDot>, { id: string }>
+  Equal<
+    ExtractParams<typeof simpleParamWithDot>,
+    { id: string | number | boolean }
+  >
 >;
 
 type TestMultipleParamsWithDotOK = Expect<
   Equal<
     ExtractParams<typeof multipleParamsWithDot>,
-    { contactId: string } & { addressId: string }
+    { contactId: string | number | boolean } & {
+      addressId: string | number | boolean;
+    }
   >
 >;
 

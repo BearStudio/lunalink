@@ -3,20 +3,23 @@ import queryString from "query-string";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ExplicitAny = any;
 
+/** Accepted types for path parameters */
+type ParamValue = string | number | boolean;
+
 /** Type to extract params from a path */
 export type ExtractParams<Path extends string> =
   // 1) Handle path params with `?`
   Path extends `${string}:${infer Param}?`
-    ? { [K in Param]: string }
+    ? { [K in Param]: ParamValue }
     : // 2) Handle path splitting
       Path extends `${string}:${infer Param}/${infer Rest}`
-      ? { [K in Param]: string } & ExtractParams<`/${Rest}`>
+      ? { [K in Param]: ParamValue } & ExtractParams<`/${Rest}`>
       : // 3) Handle params with dot separator
         Path extends `${string}:${infer Param}.${infer Rest}`
-        ? { [K in Param]: string } & ExtractParams<`${Rest}`>
+        ? { [K in Param]: ParamValue } & ExtractParams<`${Rest}`>
         : // 4) Handle params
           Path extends `${string}:${infer Param}`
-          ? { [K in Param]: string }
+          ? { [K in Param]: ParamValue }
           : // Nothing to extract
             // eslint-disable-next-line @typescript-eslint/no-empty-object-type
             {};
