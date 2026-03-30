@@ -83,6 +83,20 @@ describe("lunalink", () => {
     expect(actual).toBe(expected);
   });
 
+  it("should accept number params without explicit casting", () => {
+    const actual = lunalink("/users/:id", { id: 42 });
+    const expected = "/users/42";
+
+    expect(actual).toBe(expected);
+  });
+
+  it("should accept boolean params without explicit casting", () => {
+    const actual = lunalink("/feature/:flag", { flag: true });
+    const expected = "/feature/true";
+
+    expect(actual).toBe(expected);
+  });
+
   it("should handle params that are followed by a dot (.)", () => {
     const actual = lunalink("/podcasts/:id/episodes/:episodes.html.md", {
       id: "fork-it-community-tech-podcast-fr",
