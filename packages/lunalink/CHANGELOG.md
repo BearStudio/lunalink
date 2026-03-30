@@ -1,5 +1,11 @@
 # @bearstudio/lunalink
 
+## 0.3.2
+
+### Patch Changes
+
+- e7bc62d: feat: make params able to be number of boolean (stringable)
+
 ## 0.3.1
 
 ### Patch Changes
