@@ -1,0 +1,67 @@
+version: 2
+
+updates:
+  # npm dependencies of every pnpm workspace package (one shared lockfile).
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # Give the registry a week to catch compromised releases before they are
+    # proposed. Security updates are not delayed.
+    cooldown:
+      default-days: 7
+    # Keep exact pins exact and raise the floor of caret ranges.
+    versioning-strategy: "increase"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    groups:
+      # One pull request for all minor and patch updates.
+      minor-and-patch:
+        update-types: ["minor", "patch"]
+        # Runtime dependency of the published package: keep it in its own pull
+        # request so it gets a changeset.
+        exclude-patterns: ["query-string"]
+      # Major updates of packages that must move together.
+      react:
+        update-types: ["major"]
+        patterns: ["react", "react-dom", "@types/react", "@types/react-dom"]
+      next:
+        update-types: ["major"]
+        patterns: ["next", "@next/*"]
+      vitest:
+        update-types: ["major"]
+        patterns: ["vitest", "@vitest/*"]
+      turbo:
+        update-types: ["major"]
+        patterns: ["turbo", "eslint-plugin-turbo"]
+    ignore:
+      # TypeScript 7: typescript-eslint only supports TypeScript < 6.1.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      # ESLint 10: eslint-plugin-react only supports ESLint 9.
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@eslint/js"
+        update-types: ["version-update:semver-major"]
+      # Stay on the Node.js major used in CI (22).
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      # query-string 10 requires Node.js 22 and throws on values lunalink
+      # accepts today: taking it is a breaking release of the package.
+      - dependency-name: "query-string"
+        update-types: ["version-update:semver-major"]
+
+  # Actions used in .github/workflows.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    groups:
+      github-actions:
+        patterns: ["*"]
