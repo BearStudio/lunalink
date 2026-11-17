@@ -6,17 +6,32 @@ type ExplicitAny = any;
 /** Accepted types for path parameters */
 type ParamValue = string | number | boolean;
 
-/** Type to extract params from a path */
+/**
+ * Type to extract params from a path, its query string and its fragment.
+ * The fragment starts at the first `#` (and may contain `?`), the query string
+ * starts at the first `?` before it, so neither ends up in a param name.
+ */
 export type ExtractParams<Path extends string> =
+  Path extends `${infer PathAndQuery}#${infer Fragment}`
+    ? ExtractPathAndQueryParams<PathAndQuery> & ExtractPathParams<Fragment>
+    : ExtractPathAndQueryParams<Path>;
+
+type ExtractPathAndQueryParams<Path extends string> =
+  Path extends `${infer Pathname}?${infer Query}`
+    ? ExtractPathParams<Pathname> & ExtractPathParams<Query>
+    : ExtractPathParams<Path>;
+
+/** Type to extract params from a path without query string nor fragment */
+type ExtractPathParams<Path extends string> =
   // 1) Handle path params with `?`
   Path extends `${string}:${infer Param}?`
     ? { [K in Param]: ParamValue }
     : // 2) Handle path splitting
       Path extends `${string}:${infer Param}/${infer Rest}`
-      ? { [K in Param]: ParamValue } & ExtractParams<`/${Rest}`>
+      ? { [K in Param]: ParamValue } & ExtractPathParams<`/${Rest}`>
       : // 3) Handle params with dot separator
         Path extends `${string}:${infer Param}.${infer Rest}`
-        ? { [K in Param]: ParamValue } & ExtractParams<`${Rest}`>
+        ? { [K in Param]: ParamValue } & ExtractPathParams<`${Rest}`>
         : // 4) Handle params
           Path extends `${string}:${infer Param}`
           ? { [K in Param]: ParamValue }
@@ -74,26 +89,32 @@ function stringSubstitution(
   });
 
   const leftovers = [...paramsMap].filter(([key]) => !used.has(key));
-  // If no more params are available we return the string
-  if (leftovers.length === 0) {
-    return finalPath;
-  }
-
   const queryParams = queryString.stringify(Object.fromEntries(leftovers));
-  return `${cleanPath(finalPath)}?${queryParams}`;
+
+  return appendQueryParams(finalPath, queryParams);
 }
 
 /**
- *
- * @param path The path to clean
- * @returns The cleaned path
+ * Append serialized query params to a path, keeping its existing query string
+ * as is and its fragment (`#...`) at the end. An empty query string is removed.
+ * @param path The path that may already contain a query string and a fragment
+ * @param queryParams The serialized query params to append (can be empty)
+ * @returns The path with the merged query string
  */
-function cleanPath(path: string) {
-  if (path.endsWith("?")) {
-    return path.slice(0, -1);
-  }
+function appendQueryParams(path: string, queryParams: string) {
+  const hashIndex = path.indexOf("#");
+  const pathAndQuery = hashIndex === -1 ? path : path.slice(0, hashIndex);
+  const fragment = hashIndex === -1 ? "" : path.slice(hashIndex);
 
-  return path;
+  const queryIndex = pathAndQuery.indexOf("?");
+  const pathname =
+    queryIndex === -1 ? pathAndQuery : pathAndQuery.slice(0, queryIndex);
+  const existingQuery =
+    queryIndex === -1 ? "" : pathAndQuery.slice(queryIndex + 1);
+
+  const query = [existingQuery, queryParams].filter(Boolean).join("&");
+
+  return `${pathname}${query ? `?${query}` : ""}${fragment}`;
 }
 
 /**

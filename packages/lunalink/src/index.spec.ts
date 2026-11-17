@@ -110,6 +110,94 @@ describe("lunalink", () => {
   });
 });
 
+describe("lunalink with existing query string or fragment", () => {
+  it("should append extra params to an existing query string with &", () => {
+    const actual = lunalink("/search?sort=asc", { q: "x" });
+    const expected = "/search?sort=asc&q=x";
+
+    expect(actual).toBe(expected);
+    expect(
+      Object.fromEntries(new URL(actual, "https://example.com").searchParams)
+    ).toEqual({ sort: "asc", q: "x" });
+  });
+
+  it("should keep an existing query string untouched when there are no extra params", () => {
+    const actual = lunalink("/search?sort=asc", {});
+    const expected = "/search?sort=asc";
+
+    expect(actual).toBe(expected);
+  });
+
+  it("should insert extra params before the fragment", () => {
+    const actual = lunalink("/users/:id#top", { id: 1, q: "x" });
+    const expected = "/users/1?q=x#top";
+
+    expect(actual).toBe(expected);
+    const parsed = new URL(actual, "https://example.com");
+    expect({ search: parsed.search, hash: parsed.hash }).toEqual({
+      search: "?q=x",
+      hash: "#top",
+    });
+  });
+
+  it("should append extra params to the query string and keep the fragment last", () => {
+    const actual = lunalink("/users/:id?tab=info#top", { id: 1, q: "x" });
+    const expected = "/users/1?tab=info&q=x#top";
+
+    expect(actual).toBe(expected);
+  });
+
+  it("should treat a ? inside the fragment as part of the fragment", () => {
+    const actual = lunalink("/users/:id#top?x", { id: 1, q: "x" });
+    const expected = "/users/1?q=x#top?x";
+
+    expect(actual).toBe(expected);
+  });
+
+  it("should replace params inside the query string", () => {
+    const actual = lunalink("/users/:id/posts?page=:page", {
+      id: 1,
+      page: 2,
+      q: "x",
+    });
+    const expected = "/users/1/posts?page=2&q=x";
+
+    expect(actual).toBe(expected);
+  });
+
+  it("should remove a trailing ? when there are no extra params", () => {
+    const actual = lunalink("/contacts/:id?", { id: 5 });
+    const expected = "/contacts/5";
+
+    expect(actual).toBe(expected);
+  });
+
+  it("should remove an empty query string before the fragment", () => {
+    const actual = lunalink("/contacts/:id?#top", { id: 5 });
+    const expected = "/contacts/5#top";
+
+    expect(actual).toBe(expected);
+  });
+
+  it("should not add a ? when extra params serialize to an empty string", () => {
+    const actual = lunalink("/contacts/:id", { id: 5, filter: undefined });
+    const expected = "/contacts/5";
+
+    expect(actual).toBe(expected);
+  });
+
+  it("should append extra params to an existing query string with a base url", () => {
+    const actual = lunalink(
+      "/users/:id?tab=info",
+      { id: 1, q: "x" },
+      { baseURL: "https://api.example.com" }
+    );
+    const expected = "https://api.example.com/users/1?tab=info&q=x";
+
+    expect(actual).toBe(expected);
+  });
+});
+
 describe("lunalink with base url", () => {
   it("should preprend base url to simple replace", () => {
     const actual = lunalink(
