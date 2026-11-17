@@ -66,3 +66,72 @@ type TestMultipleParamsWithDotKO = Expect<
     { wrongContactId: string } & { wrongAddressId: string }
   >
 >;
+
+// Paths with a query string and/or a fragment
+const paramWithFragment = "/users/:id#top";
+const paramWithQuery = "/users/:id?tab=info";
+const paramWithQueryAndFragment = "/users/:id?tab=info#top";
+const paramWithTrailingQuestionMark = "/contacts/:id?";
+const queryWithoutParams = "/search?sort=asc";
+const paramInQuery = "/users/:id/posts?page=:page";
+const paramInFragment = "/docs/:id#:section";
+
+type TestParamWithFragmentOK = Expect<
+  Equal<
+    ExtractParams<typeof paramWithFragment>,
+    { id: string | number | boolean }
+  >
+>;
+
+type TestParamWithQueryOK = Expect<
+  Equal<
+    ExtractParams<typeof paramWithQuery>,
+    { id: string | number | boolean }
+  >
+>;
+
+type TestParamWithQueryAndFragmentOK = Expect<
+  Equal<
+    ExtractParams<typeof paramWithQueryAndFragment>,
+    { id: string | number | boolean }
+  >
+>;
+
+type TestParamWithTrailingQuestionMarkOK = Expect<
+  Equal<
+    ExtractParams<typeof paramWithTrailingQuestionMark>,
+    { id: string | number | boolean }
+  >
+>;
+
+type TestQueryWithoutParamsOK = Expect<
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  Equal<ExtractParams<typeof queryWithoutParams>, {}>
+>;
+
+type TestParamInQueryOK = Expect<
+  Equal<
+    ExtractParams<typeof paramInQuery>,
+    { id: string | number | boolean } & { page: string | number | boolean }
+  >
+>;
+
+type TestParamInFragmentOK = Expect<
+  Equal<
+    ExtractParams<typeof paramInFragment>,
+    { id: string | number | boolean } & {
+      section: string | number | boolean;
+    }
+  >
+>;
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+type TestWidenedStringOK = Expect<Equal<ExtractParams<string>, {}>>;
+
+type TestParamWithFragmentKO = Expect<
+  // @ts-expect-error The fragment should not be part of the param name
+  Equal<
+    ExtractParams<typeof paramWithFragment>,
+    { "id#top": string | number | boolean }
+  >
+>;
