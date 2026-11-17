@@ -22,9 +22,8 @@ jobs:
         with:
           fetch-depth: 2
 
+      # Installs the pnpm version from `packageManager` in package.json
       - uses: pnpm/action-setup@v3
-        with:
-          version: 10
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
